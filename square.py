@@ -13,6 +13,11 @@ class Point:
     """Класс, содержащий координаты x и y точки"""
 
     def __init__(self, x, y):
+        """Конструктор класса
+        :param x: координата по оси х
+        :param y: координата по оси y.
+        """
+
         self.x = x
         self.y = y
 
@@ -31,27 +36,31 @@ def input_coordinates():
         if ix.isdigit() and iy.isdigit():
             points.append(Point(float(ix), float(iy)))
         else:
-            raise ValueError('Type wrong')
+            raise ValueError('Неверный тип данных, требуется ввести целые или дробные числа')
     return points
 
 
 def triangle_exist_check(abLength, bcLength, acLength):
-    """Функция проверяет существование треугольника по правилу a+b>c, a+c>b, b+c>a, (a>0, b>0, c>0)
+    """Функция проверяет существование треугольника по правилу a+b>c, a+c>b, b+c>a, a > 0, b > 0, c > 0
+
     :param abLength: длина стороны ab
     :param bcLength: длина стороны bc
     :param acLength: длина стороны ac
-    :return: bool.
+    :return: bool (True, если выполныются все условия, и треугольник существует; False в  обратном случае).
     """
 
     acCondition = abLength + bcLength > acLength
     abCondition = bcLength + acLength > abLength
     bcCondition = abLength + acLength > bcLength
 
-    return acCondition and abCondition and bcCondition
+    zeroCheck = abLength > 0 and bcLength > 0 and acLength > 0
+
+    return acCondition and abCondition and bcCondition and zeroCheck
 
 
 def side_length(points):
     """Считает длины сторон треугольника
+
     :param points: массив экземпляров класса Point
     :return abLength, bcLength, acLength: длины сторон.
     """
@@ -64,6 +73,7 @@ def side_length(points):
 
 def square(abLength, bcLength, acLength):
     """Считает площадь по формуле Герона
+
     :param abLength: длина стороны ab
     :param bcLength: длина стороны bc
     :param acLength: длина стороны ac
